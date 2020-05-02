@@ -1,6 +1,7 @@
 package com.synbustech.notekeeper
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -14,6 +15,8 @@ class NoteActivity : AppCompatActivity() {
 
     private val tag = this::class.simpleName
     private var notePosition = POSITION_NOT_SET
+
+    val noteGetTogetherHelper = NoteGetTogetherHelper(this, lifecycle)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,6 @@ class NoteActivity : AppCompatActivity() {
             DataManager.notes.add(NoteInfo())
             notePosition = DataManager.notes.lastIndex
         }
-
     }
 
     private fun displayNote() {
@@ -69,6 +71,12 @@ class NoteActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
+
+            R.id.action_get_together -> {
+                noteGetTogetherHelper.sendMessage(DataManager.notes[notePosition])
+                true
+            }
+
             R.id.action_next -> {
                 if(notePosition < DataManager.notes.lastIndex) {
                     moveNext()

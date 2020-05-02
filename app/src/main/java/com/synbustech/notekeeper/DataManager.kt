@@ -9,25 +9,27 @@ object DataManager {
         initializeNotes()
     }
 
-    fun addNote(course: CourseInfo, noteTitle: String, noteText: String): Int{
+    fun addNote(course: CourseInfo, noteTitle: String, noteText: String): Int {
 
         val note = NoteInfo(course, noteTitle, noteText)
         notes.add(note)
         return notes.lastIndex;
     }
 
-    fun findNote(course: CourseInfo, noteTitle: String, noteText: String) : NoteInfo?{
-        for(note in notes)
-            if(course == note.course && noteTitle == note.title && noteText == note.text)
+    fun findNote(course: CourseInfo, noteTitle: String, noteText: String): NoteInfo? {
+        for (note in notes)
+            if (course == note.course && noteTitle == note.title && noteText == note.text)
                 return note
 
         return null
     }
+
     private fun initializeCourses() {
         var course = CourseInfo("android_intents", "Android Programming with Intents")
         courses.set(course.courseId, course)
 
-        course = CourseInfo(courseId = "android_async", title = "Android Async Programming and Services")
+        course =
+            CourseInfo(courseId = "android_async", title = "Android Async Programming and Services")
         courses.set(course.courseId, course)
 
         course = CourseInfo(title = "Java Fundamentals: The Java Language", courseId = "java_lang")
@@ -95,5 +97,27 @@ object DataManager {
                 "Remember to include SerialVersionUID to assure version compatibility"
             )
         )
+    }
+
+    fun loadNotes(vararg noteIds: Int): List<NoteInfo> {
+        val noteList: List<NoteInfo>
+
+        if (noteIds.isEmpty())
+            noteList = notes
+        else {
+            noteList = ArrayList(noteIds.size)
+            for (noteId in noteIds)
+                noteList.add(notes[noteId])
+        }
+        return noteList
+    }
+
+    fun noteIdsAsIntArray(recentlyViewedNotes: ArrayList<NoteInfo>): IntArray? {
+        val noteIds = ArrayList<Int>(recentlyViewedNotes.size)
+        for (note in recentlyViewedNotes) {
+            val noteId = notes.indexOf(note)
+            noteIds.add(noteId)
+        }
+        return noteIds.toIntArray()
     }
 }

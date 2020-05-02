@@ -2,6 +2,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.synbustech.notekeeper.NoteActivity">
+
+    <item
+        android:id="@+id/action_get_together"
+        android:icon="@android:drawable/sym_action_chat"
+        android:title="Message"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_next"
         android:icon="@drawable/ic_forward_white_24dp"
